@@ -25,6 +25,7 @@ function App() {
   const [show, setShow] = useState(false)
   const [rover, setRover]= useState('curiosity');
   const [camera, setCamera]= useState('FHAZ');
+  const [sol, setSol]= useState(1000);
 
   return (
       <>
@@ -43,7 +44,6 @@ function App() {
             style={{ backgroundImage: `url(https://images.unsplash.com/photo-1573588028698-f4759befb09a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1190&q=80)` }}
         >
           <Container fixed>
-            <div className="overlay"></div>
             <Grid container>
               <Grid item md={6}>
                 <div className="mainFeaturesPostContent">
@@ -59,7 +59,7 @@ function App() {
                     The goal of the Mars Exploration Program is to explore Mars and to provide a continuous
                     flow of scientific information
                   </WhiteTextTypography>
-                  <SingleSelection setShow={setShow} show={show} rover={rover} setRover={setRover} camera={camera} setCamera={setCamera}/>
+                  <SingleSelection setShow={setShow} show={show} rover={rover} setRover={setRover} camera={camera} setCamera={setCamera} sol={sol} setSol={setSol}/>
                 </div>
               </Grid>
             </Grid>
@@ -67,7 +67,7 @@ function App() {
         </Paper>
       </main>
         {show &&
-        <Photos rover={rover} camera={camera} />
+        <Photos rover={rover} camera={camera} sol={sol} />
         }
         <Typography
             className= "typo"

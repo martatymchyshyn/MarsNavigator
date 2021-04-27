@@ -6,6 +6,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import "./styles/select.sass"
 import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
 
 
 const WhiteTextTypography = withStyles({
@@ -43,19 +46,41 @@ const cameras = [
     },
     ]
 
-const SingleSelection=(props) =>{
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& .MuiTextField-root': {
+            margin: theme.spacing(0,0,1,0),
+            width: '25ch',
+            background: "white",
+            border: "2px"
+        },
+    },
+    multilineColor:{
+        color:'black'
+    }
 
-    const{setShow, show, rover, setRover, camera, setCamera} = props;
+}));
+
+const SingleSelection=(props) =>{
+    const classes = useStyles();
+
+    const{setShow, show, rover, setRover, camera, setCamera, sol, setSol} = props;
 
     const handleShow = () => {
-        setShow(!show)
+        setShow(true);
     }
 
     const select1Select = (e)=>{
+        setShow(false);
         setRover(e.target.value);
     }
     const select2Select = (e)=>{
+        setShow(false);
         setCamera(e.target.value);
+    }
+    const select3Select = (e)=>{
+        setShow(false);
+        setSol(e.target.value);
     }
     const filterCameras=()=>{
         let arr=[];
@@ -66,8 +91,12 @@ const SingleSelection=(props) =>{
         }
         return arr;
     }
+
     return (
         <>
+            <Button onClick={handleShow} variant="contained" color="secondary" className="btn">
+                Find Photos
+            </Button>
         <div className = "select" >
             <InputLabel className = "InputLabel" id="label1"> <WhiteTextTypography>Rover</WhiteTextTypography></InputLabel>
             <Select className = "options"  labelId="label" id="select1" value={rover} onChange={select1Select}>
@@ -82,11 +111,24 @@ const SingleSelection=(props) =>{
                 ))}
             </Select>
             <InputLabel className = "InputLabel" id="label3"><WhiteTextTypography>Sol</WhiteTextTypography></InputLabel>
-            <Select className = "options"  labelId="label" id="select3" value="1000">
-                <MenuItem value="1000">1000</MenuItem>
-            </Select>
+            <form className={classes.root} noValidate autoComplete="off">
+                <TextField
+                    id="outlined-multiline-flexible"
+                    multiline
+                    rowsMax={2}
+                    value={sol}
+                    onChange={select3Select}
+
+                    InputProps={{
+                        className: classes.multilineColor
+                    }}
+                />
+            </form>
+
         </div>
-            <Button onClick={handleShow} className = "btn" variant="outlined"><WhiteTextTypography>Let`s find photos</WhiteTextTypography></Button>
+
+
+
 
         </>
     );
